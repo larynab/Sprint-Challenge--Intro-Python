@@ -1,3 +1,10 @@
+import csv
+
+#tried to do pandas >_>
+# import pandas
+# df = pandas.read_csv('cities.csv')
+# print(df)
+
 # Create a class to hold a city location. Call the class "City". It should have
 # fields for name, lat and lon (representing latitude and longitude).
 class City:
@@ -5,6 +12,8 @@ class City:
         self.name = name
         self.lat = lat
         self.lon = lon
+    def __str__(self):    
+        return f'{self.name}, {self.lat}, {self.lon}'    
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
 # In the body of the `cityreader` function, use Python's built-in "csv" module 
@@ -18,14 +27,32 @@ class City:
 cities = []
 
 def cityreader(cities=[]):
-  # TODO Implement the functionality to read from the 'cities.csv' file
+  # TODO 
+  # Implement the functionality to read from the 'cities.csv' file
   # For each city record, create a new City instance and add it to the 
   # `cities` list
-    
+
+    #working solution!----------------------------------------------------
+    with open("cities.csv") as csvfile:
+        for city in list(csv.reader(csvfile))[1:]:
+            #when append, the float selection is location of object in list and because they
+            #are integers 
+            cities.append(City(city[0], float(city[3]), float(city[4])))
     return cities
+    #---------------------------------------------------------------------
 
+    #failed solution---------------
+    # f = open('cities.csv', 'r')
+
+    # with f:
+
+    #     reader = csv.DictReader(f)
+    
+    #     for row in reader:
+    #         return f'{row.name}, {row.lat}, {row.lon}'           
+    #------------------------------
+    
 cityreader(cities)
-
 # Print the list of cities (name, lat, lon), 1 record per line.
 for c in cities:
     print(c)
